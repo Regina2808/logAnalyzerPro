@@ -4,146 +4,171 @@
 
 LogAnalyzer Pro est un outil en ligne de commande développé en Python permettant d’analyser des fichiers de logs, de générer des rapports JSON, d’archiver les fichiers traités et de nettoyer automatiquement les anciens rapports.
 
+---
+
 ## 🎯 Objectif
 
 L’objectif du projet est de concevoir un outil capable de :
 
-- Analyser automatiquement des fichiers de logs applicatifs,
+* Analyser automatiquement des fichiers de logs applicatifs
+* Extraire des informations selon leur niveau de criticité (INFO, WARN, ERROR)
+* Générer un rapport structuré au format JSON
+* Archiver les fichiers traités
+* Nettoyer les anciens rapports
+* Permettre une exécution automatique via Cron
 
-- Extraire des informations selon leur niveau de criticité (INFO, WARN, ERROR),
-
-- Générer un rapport structuré au format JSON,
-
-- Archiver les fichiers traités,
-
-- Nettoyer les anciens rapports,
-
-- Et permettre une exécution automatique via Cron.
+---
 
 ## ⚙️ Prérequis
 
 * Python 3.x
 * Aucune bibliothèque externe requise
 
-## Installation
+---
+
+## 💻 Installation
+
+```bash
 git clone https://github.com/votre-repo/loganalyzer-pro.git
 cd loganalyzer-pro
+```
 
 ---
 
 ## 📁 Structure du projet
 
-loganalyzer/ ├── main.py # Point d'entrée principal ├── analyser.py # Module 1 : Ingestion et analyse ├── rapport.py # Module 2 : Génération du rapport JSON ├── archiver.py # Module 3 : Archivage et nettoyage ├── logs_test/ # Fichiers de logs pour les tests │ ├── app1.log │ ├── app2.log │ └── app3.log ├── rapports/ # Dossier généré automatiquement ├── backups/ # Dossier généré automatiquement └── README.md # Documentation technique
+```
+loganalyzer/
+├── main.py               # Point d'entrée principal
+├── analyser.py           # Module 1 : Ingestion et analyse
+├── rapport.py            # Module 2 : Génération du rapport JSON
+├── archiver.py           # Module 3 : Archivage et nettoyage
+├── logs_test/            # Fichiers de logs pour les tests
+│   ├── app1.log
+│   ├── app2.log
+│   └── app3.log
+├── rapports/             # Dossier généré automatiquement
+├── backups/              # Dossier généré automatiquement
+└── README.md             # Documentation technique
+```
 
 ---
 
-3. ▶️ Utilisation
-Commande principale
+## ▶️ Utilisation
+
+### Commande principale
+
+```bash
 python main.py --source logs_test --niveau ERROR --dest backups --retention 30
-Arguments disponibles
-Argument	Description
---source	Dossier contenant les fichiers .log (obligatoire)
---niveau	ERROR, WARN, INFO, ALL (défaut : ALL)
---dest	Dossier de destination pour les archives
---retention	Nombre de jours avant suppression des anciens rapports
+```
+
+### Arguments disponibles
+
+| Argument      | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| `--source`    | Dossier contenant les fichiers `.log` (obligatoire)    |
+| `--niveau`    | ERROR, WARN, INFO, ALL (défaut : ALL)                  |
+| `--dest`      | Dossier de destination pour les archives               |
+| `--retention` | Nombre de jours avant suppression des anciens rapports |
 
 ---
 
 ## 🧩 Modules
 
-## 🔹 analyser.py
+### 🔹 analyser.py
 
-Lecture des fichiers .log
+* Lecture des fichiers `.log`
+* Filtrage des lignes selon le niveau
+* Calcul des statistiques :
 
-Filtrage des lignes selon le niveau
+  * Total des lignes
+  * Nombre par niveau
+  * Top 5 erreurs
 
-Calcul des statistiques :
+---
 
-total des lignes
+### 🔹 rapport.py
 
-nombre par niveau
+* Génération du fichier JSON
+* Structuration des données
+* Ajout des métadonnées (date, utilisateur, OS)
 
-top 5 erreurs
+---
 
-## 🔹 rapport.py
+### 🔹 archiver.py
 
-Génération du fichier JSON
+* Compression des fichiers logs (`.tar.gz`)
+* Déplacement des archives
+* Suppression des anciens rapports
 
-Structuration des données
+---
 
-Ajout des métadonnées (date, utilisateur, OS)
+### 🔹 main.py
 
-## 🔹 archiver.py
-
-Compression des fichiers logs (.tar.gz)
-
-Déplacement des archives
-
-Suppression des anciens rapports
-
-## 🔹 main.py
-
-Coordination de tous les modules
-
-Gestion des erreurs
-
-Exécution globale du programme
+* Coordination de tous les modules
+* Gestion des erreurs
+* Exécution globale du programme
 
 ---
 
 ## ⏰ Planification (Cron)
 
+```bash
 0 3 * * 0 /usr/bin/python3 /chemin/vers/loganalyzer/main.py --source /chemin/logs --dest /chemin/backups
-Explication :
+```
 
-0 3 → à 03h00
+### Explication
 
-* * → tous les jours et mois
-
-0 → dimanche
+* `0 3` → à 03h00
+* `* *` → tous les jours et tous les mois
+* `0` → dimanche
 
 ---
 
 ## 👥 Répartition des tâches
 
-Personne	Module	Tâches détaillées
-Personne 1	analyser.py	Lire les fichiers .log, filtrer selon INFO/WARN/ERROR, calculer toutes les statistiques, gérer les arguments CLI avec argparse
-Personne 2	rapport.py	Créer le fichier JSON, organiser les données correctement, ajouter les métadonnées (date, utilisateur, OS)
-Personne 3	archiver.py	Créer l’archive .tar.gz, déplacer les fichiers, supprimer les anciens rapports selon la durée
-Personne 4	main.py	Relier tous les modules, gérer les erreurs, contrôler l’exécution complète
-Personne 5	Tests & Documentation	Créer les fichiers de test, tester tout le projet, détecter les bugs, rédiger README et configurer Cron
+| Personne   | Module                | Tâches détaillées                                                                                                                |
+| ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Personne 1 | analyser.py           | Lire les fichiers `.log`, filtrer selon INFO/WARN/ERROR, calculer toutes les statistiques, gérer les arguments CLI avec argparse |
+| Personne 2 | rapport.py            | Créer le fichier JSON, organiser les données correctement, ajouter les métadonnées (date, utilisateur, OS)                       |
+| Personne 3 | archiver.py           | Créer l’archive `.tar.gz`, déplacer les fichiers, supprimer les anciens rapports selon la durée                                  |
+| Personne 4 | main.py               | Relier tous les modules, gérer les erreurs, contrôler l’exécution complète                                                       |
+| Personne 5 | Tests & Documentation | Créer les fichiers de test, tester tout le projet, détecter les bugs, rédiger README et configurer Cron                          |
 
 ---
 
-## 🧪 Tests
+## 🧪 Données de Test
 
-Pour vos tests, créez un dossier logs_test/ contenant au minimum 3 fichiers .log simulant des logs applicatifs réels.
+Pour vos tests, créez un dossier `logs_test/` contenant au minimum **3 fichiers `.log`** simulant des logs applicatifs réels.
 
 Chaque fichier doit contenir des lignes respectant le format suivant :
 
-Format :
+### Format
 
+```
 YYYY-MM-DD HH:MM:SS  NIVEAU  Message
+```
 
-Exemple :
+### Exemple
 
+```
 2024-04-01 08:22:30  ERROR  Échec de la connexion au serveur LDAP
 2024-04-01 08:30:00  INFO   Tâche planifiée de nettoyage démarrée
 2024-04-01 09:00:01  WARN   Utilisation CPU supérieure à 85%
+```
 
-Chaque fichier doit contenir au moins 20 lignes avec un mélange de INFO, WARN et ERROR.
+Chaque fichier doit contenir au moins **20 lignes** avec un mélange de INFO, WARN et ERROR.
 
 ---
 
 ## 📌 Remarque
 
-Tous les chemins doivent être absolus
+* Tous les chemins doivent être absolus
+* Le code doit être commenté
+* Chaque fonction doit avoir une docstring
+* Le programme ne doit jamais planter sans message d’erreur clair
 
-Le code doit être commenté
-
-Chaque fonction doit avoir une docstring
-
-Le programme ne doit jamais planter sans message d’erreur clair
+---
 
 ## 📌 Projet académique
 
