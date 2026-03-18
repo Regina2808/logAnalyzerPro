@@ -132,8 +132,8 @@ python main.py --source logs_test --niveau ERROR --dest backups --retention 30
 | AWADJIHE Régina | analyser.py           | Lire les fichiers `.log`, filtrer selon INFO/WARN/ERROR, calculer toutes les statistiques, gérer les arguments CLI avec argparse |
 | ANAGONOU Richard | rapport.py            | Créer le fichier JSON, organiser les données correctement, ajouter les métadonnées (date, utilisateur, OS)                       |
 | AGBODO Fiacresse | archiver.py           | Créer l’archive `.tar.gz`, déplacer les fichiers, supprimer les anciens rapports selon la durée                                  |
-| Personne 4 | main.py               | Relier tous les modules, gérer les erreurs, contrôler l’exécution complète                                                       |
-| Personne 5 | Tests & Documentation | Créer les fichiers de test, tester tout le projet, détecter les bugs, rédiger README et configurer Cron                          |
+| DAYE KANLINSOU Gildas | main.py               | Relier tous les modules, gérer les erreurs, contrôler l’exécution complète                                                       |
+| KORE Ange | Tests & Documentation | Créer les fichiers de test, tester tout le projet, détecter les bugs, rédiger README et configurer Cron                          |
 
 ---
 
