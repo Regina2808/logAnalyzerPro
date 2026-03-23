@@ -66,9 +66,9 @@ def nettoyer_rapports(dossier_rapports, jours_retention=30):
 def executer_archivage_complet(liste_logs):
     
     #Fonction appelée par main.py
-
+    # Définition des chemins absolus
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    # chemin absolus pour les dossiers de sauvegarde et rapports
+    # On sort de loganalyzer pour trouver les dossiers à la racine
     dossier_backups = os.path.normpath(os.path.join(base_dir, "..", "backups"))
     dossier_rapports = os.path.normpath(os.path.join(base_dir, "..", "rapports"))
 
