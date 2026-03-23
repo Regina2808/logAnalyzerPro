@@ -148,6 +148,12 @@ Chaque fichier doit contenir des lignes respectant le format suivant :
 ```
 YYYY-MM-DD HH:MM:SS  NIVEAU  Message
 ```
+## 🕐 Cron
+
+Execution chaque dimanche à 03h
+
+0 3 * * 0 /usr/bin/python3 /home/ackerman/loganalyzer/main.py --source /home/ackerman/loganalyzer/logs_test --dest /home/ackerman/loganalyzer/backups --retention 30
+
 
 ### Exemple
 
