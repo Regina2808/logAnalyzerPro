@@ -1,0 +1,43 @@
+{
+    "metadata": {
+        "date": "2026-03-21 21:35:14",
+        "utilisateur": "DELL",
+        "os": "Windows",
+        "source": "c:\\Users\\DELL\\Documents\\logAnalyzerPro\\logs_test"
+    },
+    "statistiques": {
+        "total_lignes": 150,
+        "par_niveau": {
+            "ERROR": 12,
+            "WARN": 8,
+            "INFO": 130
+        },
+        "top5_erreurs": [
+            {
+                "message": "Échec de la connexion au serveur LDAP",
+                "occurrences": 5
+            },
+            {
+                "message": "Timeout de la base de données",
+                "occurrences": 3
+            },
+            {
+                "message": "Échec de l'authentification",
+                "occurrences": 2
+            },
+            {
+                "message": "Fichier de configuration manquant",
+                "occurrences": 1
+            },
+            {
+                "message": "Permission refusée",
+                "occurrences": 1
+            }
+        ]
+    },
+    "fichiers_traites": [
+        "c:/Users/DELL/Documents/logAnalyzerPro/logs_test/app1.log",
+        "c:/Users/DELL/Documents/logAnalyzerPro/logs_test/app2.log",
+        "c:/Users/DELL/Documents/logAnalyzerPro/logs_test/app3.log"
+    ]
+}
