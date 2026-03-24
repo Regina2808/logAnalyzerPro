@@ -19,7 +19,7 @@ import glob
 from pathlib import Path
 
 def recuperer_metadonnees():
-    # Récupère le nom de l'utilisateur et le système d'exploitation courant
+    # Rôle: Récupère le nom de l'utilisateur et le système d'exploitation courant
 
     # 1- Récupération du nom de l'utilisateur
     utilisateur = os.environ.get('USERNAME') or " Utilisateur Inconnu"
@@ -43,7 +43,7 @@ def recuperer_metadonnees():
     }
 
 def configurer_arguments():
-    # Configure les arguments de la ligne de commande
+    # Rôle: Configure les arguments de la ligne de commande
 
     parser = argparse.ArgumentParser(description = "LogAnalyserPro - Module d'Analyse")
 
@@ -58,7 +58,7 @@ def configurer_arguments():
     return parser.parse_args()
 
 def lister_fichiers_logs(dossier_source):
-    # Liste tous les fichiers .log dans le dossier spécifié
+    # Rôle: Liste tous les fichiers .log dans le dossier spécifié
 
     # Récupération du dossier actuel
     dossier_actuel = Path.cwd()
