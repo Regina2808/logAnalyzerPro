@@ -1,0 +1,43 @@
+{
+    "metadata": {
+        "date": "2026-03-25 00:30:58",
+        "utilisateur": "Régina",
+        "os": "Windows",
+        "source": "logs_test"
+    },
+    "statistiques": {
+        "total_lignes": 60,
+        "par_niveau": {
+            "INFO": 30,
+            "WARN": 12,
+            "ERROR": 18
+        },
+        "top5_erreurs": [
+            [
+                "Echec de la connexion au serveur LDAP",
+                5
+            ],
+            [
+                "Transaction refusee : Provision insuffisante",
+                5
+            ],
+            [
+                "Echec de synchronisation du stock distant",
+                5
+            ],
+            [
+                "Session expiree prematurement",
+                1
+            ],
+            [
+                "Cle API invalide ou expiree",
+                1
+            ]
+        ]
+    },
+    "fichiers_traites": [
+        "C:\\Users\\a\\Desktop\\Projets\\logAnalyzerPro\\logs_test\\app1.log",
+        "C:\\Users\\a\\Desktop\\Projets\\logAnalyzerPro\\logs_test\\app2.log",
+        "C:\\Users\\a\\Desktop\\Projets\\logAnalyzerPro\\logs_test\\app3.log"
+    ]
+}

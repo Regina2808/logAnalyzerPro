@@ -9,23 +9,30 @@ from collections import Counter
 
 
 def configurer_arguments():
-    parser = argparse.ArgumentParser()
+    """
+    Rôle: Configure et recupere les arguments de la ligne de commande 
+    """
+    parser = argparse.ArgumentParser(description="LogAnalyzer Pro - Module d'Analyse")
 
-    parser.add_argument("--source", required=True)
+    parser.add_argument("--source", required=True, help="Chemin vers le dossier des logs")
     parser.add_argument(
         "--niveau",
         default="ALL",
-        choices=["INFO", "WARN", "ERROR", "ALL"]
+        choices=["INFO", "WARN", "ERROR", "ALL"],
+        help="Niveau de filtrage des logs"
     )
 
-    parser.add_argument("--dest", default="backups")
-    parser.add_argument("--retention", type=int, default=30)
+    parser.add_argument("--dest", default="backups", help="Dossier de destination des archives")
+    parser.add_argument("--retention", type=int, default=30, help="Nombre de jours de retention")
 
     return parser.parse_args()
 
 
 def recuperer_metadonnees():
-
+    """
+    Rôle: Detecte les informations du systeme et l'utilisateur courant.
+    
+    """
     utilisateur = os.environ.get("USER") or os.environ.get("USERNAME")
 
     systeme = platform.system()
@@ -37,22 +44,32 @@ def recuperer_metadonnees():
 
 
 def lister_fichiers_logs(source):
+    """
+    Rôle: Scanne le dossier source pour lister les fichiers se terminant par .log.
+    Utilise des chemins absolus pour garantir la robustesse.
+    
+    """
+    # On recupere le dossier courant
+    base = os.path.dirname((__file__))
 
-    base = os.path.dirname(os.path.abspath(__file__))
-
+    # On construit le chemin vers les logs
     dossier = os.path.join(base, source)
 
     if not os.path.exists(dossier):
-        print("Dossier introuvable")
+        print(f"Erreur : Le dossier '{dossier}' est introuvable.")
         exit(1)
 
-    pattern = os.path.join(dossier, "*.log")
+    critere_recherche = os.path.join(dossier, "*.log")
 
-    return glob.glob(pattern)
+    return glob.glob(critere_recherche)
 
 
 def analyser_fichiers(fichiers, niveau_filtre):
+    """
+    Rôle: Parcourt chaque fichier ligne par ligne pour extraire les statistiques 
+    et filtrer selon le niveau.
 
+    """
     total = 0
 
     niveaux = {
@@ -64,35 +81,41 @@ def analyser_fichiers(fichiers, niveau_filtre):
     erreurs = []
 
     for fichier in fichiers:
+        try:
 
-        with open(fichier, "r", encoding="utf-8") as f:
+            with open(fichier, "r", encoding="utf-8") as f:
 
-            for ligne in f:
+                for ligne in f:
 
-                total += 1
+                    total += 1
 
-                parts = ligne.strip().split()
+                    parts = ligne.strip().split()
 
-                if len(parts) < 3:
-                    continue
+                    # On verifie si la ligne contient au moins la date, l'heure et le niveau
+                    if len(parts) < 3:
+                        continue
 
-                level = parts[2]
+                    level = parts[2]
 
-                if niveau_filtre != "ALL" and level != niveau_filtre:
-                    continue
+                    if niveau_filtre != "ALL" and level != niveau_filtre:
+                        continue
 
-                if level in niveaux:
-                    niveaux[level] += 1
+                    if level in niveaux:
+                        niveaux[level] += 1
 
-                if level == "ERROR":
-                    message = " ".join(parts[3:])
-                    erreurs.append(message)
+                    # Si c'est une erreur, on extrait le message
+                    if level == "ERROR":
+                        message = " ".join(parts[3:])
+                        erreurs.append(message)
+        except Exception as e:
+            print(f"Attention : Impossible de lire {fichier}. Erreur : {e}")
 
-    top5 = Counter(erreurs).most_common(5)
+    # Extraction des 5 erreurs les plus frequentes
+    top_5_erreurs = Counter(erreurs).most_common(5)
 
     return {
         "total_lignes": total,
         "niveaux": niveaux,
-        "top_5": top5,
+        "top_5": top_5_erreurs,
         "fichiers": fichiers
     }
