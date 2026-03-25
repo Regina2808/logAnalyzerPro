@@ -114,7 +114,7 @@ python main.py --source logs_test --niveau ERROR --dest backups --retention 30
 ## ⏰ Planification (Cron)
 
 ```bash
-0 3 * * 0 /usr/bin/python3 /chemin/vers/loganalyzer/main.py --source /chemin/logs --dest /chemin/backups
+0 3 * * 0 /usr/bin/python3 /chemin/vers/loganalyzer/main.py --source /chemin/logs --dest /chemin/backups --retention 30
 ```
 
 ### Explication
